@@ -239,7 +239,7 @@ const App = () => {
                             key={idx}
                             id={`radio-${idx}`}
                             type="radio"
-                            variant='outline-primary'
+                            variant='outline-info'
                             name="radio"
                             value={radio.value}
                             checked={radioValue === radio.value}
@@ -273,9 +273,9 @@ const App = () => {
                     ref={canvasRef}/>
             </main>
             <main>
-                <Button className="mx-2 my-2" onClick={download}> Download Image</Button>
+                <Button className="mx-2 my-2" variant="success" onClick={download}> Download Image</Button>
                 <Button className="mx-2 my-2" onClick={clearCanvas}> Clear Canvas</Button>
-                <Button className="mx-2 my-2" onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 8}))}> 
+                <Button className="mx-2 my-2" variant="danger" onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 8}))}> 
                          Undo </Button>
             </main>
         </article>
