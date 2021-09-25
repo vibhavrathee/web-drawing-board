@@ -3,8 +3,6 @@ const initialState = {
   numOfCakes: 10,
   isDraw: false,
   isWrite: false,
-  mouseX: 0,
-  mouseY: 20,
   startX: 0, 
   startY: 20,
   recentWords: [],
@@ -24,14 +22,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         isDraw: false,
         isWrite: true
-    };
-    case 'CHANGE_MOUSE_X': return {
-        ...state,
-        mouseX: action.payload,
-    };
-    case 'CHANGE_MOUSE_Y': return {
-        ...state,
-        mouseY: action.payload,
     };
     case 'CHANGE_START_X': return {
         ...state,

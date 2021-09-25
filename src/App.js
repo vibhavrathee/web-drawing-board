@@ -5,26 +5,24 @@ import {Navbar, Container, Button, ButtonGroup, Row, Col, ToggleButton, ButtonTo
 import context from "react-bootstrap/esm/AccordionContext";
 
 import { useSelector, useDispatch, createDispatchHook } from "react-redux";
-import { openDraw, openWrite, changeMouseX, changeMouseY,changeStartX, changeStartY,
+import { openDraw, openWrite, changeStartX, changeStartY,
         changeUndoList, changeRecentWords, change_X, change_Y } from "./redux/action";
 const App = () => {
-    const numOfCakes = useSelector(state => state.numOfCakes)
     // Variables to tell whether you wants to draw or write
-    const isDraw = useSelector(state => state.isDraw);
-    const isWrite = useSelector(state => state.isWrite);
+    var isDraw = useSelector(state => state.isDraw);
+    var isWrite = useSelector(state => state.isWrite);
     //variables to store position of mouse pointers while writing
-    const mouseX = useSelector(state => state.mouseX);
-    const mouseY = useSelector(state => state.mouseY);
-    const startX = useSelector(state => state.startX);
-    const startY = useSelector(state => state.startY);
+    var startX = useSelector(state => state.startX);
+    var startY = useSelector(state => state.startY);
     //For handling Backspace
-    const recentWords = useSelector(state => state.recentWords);//keeps track of letter enters
-    const undoList = useSelector(state => state.undoList);//stores previous canvas states
+    var recentWords = useSelector(state => state.recentWords);//keeps track of letter enters
+    var undoList = useSelector(state => state.undoList);//stores previous canvas states
     //stores track of pointer positions where we would be writing
-    const X = useSelector(state => state.X);
-    const Y = useSelector(state => state.Y);
-    const dispatch = useDispatch()
-
+    var X = useSelector(state => state.X);
+    var Y = useSelector(state => state.Y);
+    var dispatch = useDispatch()
+    var mouseX = startX;
+    var mouseY = startY;
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
@@ -148,8 +146,8 @@ const App = () => {
             return;
         }
         console.log( "setStuff called: ",offsetX, ' ', offsetY);
-        dispatch(changeMouseX(offsetX));
-        dispatch(changeMouseY(offsetY));
+        mouseX = offsetX;
+        mouseY = offsetY;
     }
     const handleDoubleClick = (offsetX, offsetY) => {
         if(!isWrite) {
@@ -194,9 +192,10 @@ const App = () => {
             return;
         }
         //adding text
-        contextRef.current.fillText(e.key, mouseX, mouseY);
         console.log(e.key);
         //updating pointer coordinates
+        // increaseStuff(contextRef.current.measureText(e.key).width, 0);
+        contextRef.current.fillText(e.key, mouseX, mouseY);
         setStuff(mouseX + contextRef.current.measureText(e.key).width, mouseY);
         //saving this page
         saveState();
@@ -219,8 +218,11 @@ const App = () => {
         var image = canvasRef.current.toDataURL("image/png").replace("image/png", "image/pdf");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
         window.location.href=image; // it will save locally
     }
+    const clearCanvas = () => {
+        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    }
     return (
-        <>
+        <article>
             <Navbar bg="dark" variant="dark">
                 <Container className="justify-content-center">
                         <Navbar.Brand href="#home">
@@ -270,8 +272,13 @@ const App = () => {
                     onMouseMove={draw}
                     ref={canvasRef}/>
             </main>
-            <Button className="mybtn mx-2 my-2" onClick={download}> Download Image</Button>
-        </>
+            <main>
+                <Button className="mx-2 my-2" onClick={download}> Download Image</Button>
+                <Button className="mx-2 my-2" onClick={clearCanvas}> Clear Canvas</Button>
+                <Button className="mx-2 my-2" onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 8}))}> 
+                         Undo </Button>
+            </main>
+        </article>
     )
 };
 

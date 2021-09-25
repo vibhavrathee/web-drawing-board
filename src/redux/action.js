@@ -11,20 +11,6 @@ export const openWrite = () => {
   }
 }
 
-export const changeMouseX = (X = 0) => {
-  return {
-    type: 'CHANGE_MOUSE_X',
-    payload: X
-  }
-}
-
-export const changeMouseY = (Y = 0) => {
-  return {
-    type: 'CHANGE_MOUSE_Y',
-    payload: Y
-  }
-}
-
 export const changeStartX = (X = 0) => {
   return {
     type: 'CHANGE_START_X',
