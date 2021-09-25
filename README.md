@@ -6,6 +6,6 @@ It makes use of CANVAS react component to allow user to draw and write text anyw
 
 ![image](https://user-images.githubusercontent.com/75633452/134773583-0db20f90-9527-4f10-bdfe-089b82f8e7cd.png)
 
-To undo any change simply click backspace. I have deployed the app on netlify.
+To undo any change simply click backspace or click on the undo button provided. There is also a download button that allows you to download the image. I have deployed the app on netlify.
 
 Go to : https://vibhav-rathee-web-board.netlify.app/
